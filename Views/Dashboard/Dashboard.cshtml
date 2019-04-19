@@ -1,0 +1,30 @@
+@using System;
+@using System.Collections.Generic;
+@using System.Linq;
+@model List<Wedding>
+<body>
+    <h1>Welcome!</h1>
+    <a href = "/add/wedding">Add Wedding</a> 
+    <a href = "/logout">Logout</a> 
+
+    @foreach (var w in Model)
+    {
+        <p><a href = "/view/wedding/@w.WeddingId">@w.WedderOne & @w.WedderTwo</a> | @w.WeddingDate | @w.Guests.Count | 
+            Action:
+            @if(@w.UserId == @ViewBag.UserId)
+            {
+                <a href="/delete/wedding/@w.WeddingId">Delete</a>
+            }else{
+                @if(w.Guests.Any (g => g.UserId == @ViewBag.UserId))
+                {
+                    <a href="/leave/wedding/@w.WeddingId">Un-RSVP</a>
+                }else
+                {
+                    <a href="/join/wedding/@w.WeddingId">RSVP</a> 
+                }
+            }
+            
+        </p>
+    }
+    
+</body>

@@ -1,0 +1,22 @@
+@model Wedding
+<body>
+    <h1>Plan Your Wedding</h1>
+    <a href ="/dashboard">Dashboard</a> | <a href = "/logout">Logout</a>
+
+<form asp-action="CreateWedding" asp-controller="Dashboard" method="post">
+        <span asp-validation-for="WedderOne"></span><br>
+        <label asp-for="WedderOne"></label><br>
+        <input asp-for="WedderOne"><br>
+        <span asp-validation-for="WedderTwo"></span><br>
+        <label asp-for="WedderTwo"></label><br>
+        <input asp-for="WedderTwo"><br>
+        <span asp-validation-for="WeddingDate"></span><br>
+        <label asp-for="WeddingDate"></label><br>
+        <input type = "date" asp-for="WeddingDate"><br>
+        <span asp-validation-for="WeddingAddress"></span><br>
+        <label asp-for="WeddingAddress"></label><br>
+        <input asp-for="WeddingAddress"><br>
+<button>Create</button>
+</form>
+
+</body>
