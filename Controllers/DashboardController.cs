@@ -29,7 +29,7 @@ namespace LoginReg.Controllers
                 return RedirectToAction("Index", "Home");
             List<Wedding> AllWeddings = dbContext.Weddings
             .Include(w => w.Guests)
-            .OrderBy(w => w.WeddingDate)
+            .OrderBy(w => w.WeddingDate).ThenBy(w => w.Time)
             .ToList();
             ViewBag.UserId = userId;
 
@@ -72,8 +72,42 @@ namespace LoginReg.Controllers
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
                 return RedirectToAction("Index", "Home");
-            var oneWedding = dbContext.Weddings.FirstOrDefault(w => w.WeddingId == weddingId);
+            Wedding oneWedding = dbContext.Weddings
+            .Include(w => w.Guests)
+            .ThenInclude(a => a.User)
+            .FirstOrDefault(w => w.WeddingId == weddingId);
 
+            User oneUser = dbContext.Users
+            .Include(u => u.UserWeddings)
+            .ThenInclude(a => a.Wedding)
+            .FirstOrDefault(u => u.UserId == userId);
+
+           Console.WriteLine(oneUser.UserWeddings
+           .Any(w => w.Wedding.WeddingDate.Ticks - oneWedding.WeddingDate.Ticks >= 0));
+
+            Console.WriteLine(oneUser.UserWeddings);
+            if(oneUser.UserWeddings
+           .Any(w => w.Wedding.WeddingDate.Ticks - oneWedding.WeddingDate.Ticks == 0 && 
+           w.Wedding.Time.TimeOfDay.TotalMilliseconds - oneWedding.Time.TimeOfDay.TotalMilliseconds == 0))
+           {
+               return RedirectToAction("Dashboard");
+           }
+           int idx = 0;
+            if(oneWedding.TimeType == "Hours")
+                idx = 3600;
+            else if (oneWedding.TimeType == "Minutes")
+                idx = 60;
+            else if (oneWedding.TimeType == "Days")
+                idx = 86400;
+
+            int duration = oneWedding.Duration * idx;
+
+           if(oneUser.UserWeddings
+           .Any(w => w.Wedding.Duration - oneWedding.Duration == 0))
+           {
+               return RedirectToAction("Dashboard");
+           }
+           System.Console.WriteLine(oneWedding.WeddingDate.Ticks);
             Association newAssociation = new Association()
             {
                 UserId = (int)userId,

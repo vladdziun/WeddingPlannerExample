@@ -9,7 +9,26 @@
 
     @foreach (var w in Model)
     {
-        @if(w.WeddingDate >= DateTime.Today && w.Time >= DateTime.Now)
+        @if(w.WeddingDate > DateTime.Today )
+        {
+        <p><a href = "/view/@w.WeddingId">@w.WeddingTitle </a> Date: @w.WeddingDate.ToString("MMMM dd") at @w.Time.ToString("h:mm tt")
+         | Duration: @w.Duration @w.TimeType | Event Coordinator: @w.CreatorName | Participants: @w.Guests.Count | 
+            Action:
+            @if(@w.UserId == @ViewBag.UserId)
+            {
+                <a href="/delete/@w.WeddingId">Delete</a>
+            }else{
+                @if(w.Guests.Any (g => g.UserId == @ViewBag.UserId))
+                {
+                    <a href="/leave/wedding/@w.WeddingId">Leave</a>
+                }else
+                {
+                    <a href="/join/wedding/@w.WeddingId">Join</a> 
+                }
+            }
+            
+        </p>
+        }else if ( w.WeddingDate >= DateTime.Today && w.Time.TimeOfDay.TotalHours >= DateTime.Now.TimeOfDay.TotalHours)
         {
         <p><a href = "/view/@w.WeddingId">@w.WeddingTitle </a> Date: @w.WeddingDate.ToString("MMMM dd") at @w.Time.ToString("h:mm tt")
          | Duration: @w.Duration @w.TimeType | Event Coordinator: @w.CreatorName | Participants: @w.Guests.Count | 
