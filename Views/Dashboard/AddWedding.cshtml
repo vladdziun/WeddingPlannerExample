@@ -4,18 +4,28 @@
     <a href ="/dashboard">Dashboard</a> | <a href = "/logout">Logout</a>
 
 <form asp-action="CreateWedding" asp-controller="Dashboard" method="post">
-        <span asp-validation-for="WedderOne"></span><br>
-        <label asp-for="WedderOne"></label><br>
-        <input asp-for="WedderOne"><br>
-        <span asp-validation-for="WedderTwo"></span><br>
-        <label asp-for="WedderTwo"></label><br>
-        <input asp-for="WedderTwo"><br>
+        <span asp-validation-for="WeddingTitle"></span><br>
+        <label asp-for="WeddingTitle"></label><br>
+        <input asp-for="WeddingTitle"><br>
+        <span asp-validation-for="Time"></span><br>
+        <label asp-for="Time"></label><br>
+        <input type ="time" asp-for="Time"><br>
         <span asp-validation-for="WeddingDate"></span><br>
         <label asp-for="WeddingDate"></label><br>
         <input type = "date" asp-for="WeddingDate"><br>
-        <span asp-validation-for="WeddingAddress"></span><br>
-        <label asp-for="WeddingAddress"></label><br>
-        <input asp-for="WeddingAddress"><br>
+        <span asp-validation-for="Duration"></span><br>
+        <label asp-for="Duration"></label><br>
+        <input asp-for="Duration">
+        <span asp-validation-for="TimeType"></span>
+        <label asp-for="TimeType"></label>
+        <select asp-for="TimeType">
+            <option value = "Minutes">Minutes</option>
+            <option value = "Hours">Hours</option>
+            <option value = "Days">Days</option>
+        </select><br>
+        <span asp-validation-for="Description"></span><br>
+        <label asp-for="Description"></label><br>
+        <input asp-for="Description"><br>
 <button>Create</button>
 </form>
 

@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginReg.Migrations
 {
     [DbContext(typeof(LoginRegContext))]
-    [Migration("20190417035115_five")]
-    partial class five
+    [Migration("20190419164915_3")]
+    partial class _3
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,29 +32,9 @@ namespace LoginReg.Migrations
 
                     b.HasIndex("UserId");
 
+                    b.HasIndex("WeddingId");
+
                     b.ToTable("Associations");
-                });
-
-            modelBuilder.Entity("LoginReg.Models.Movie", b =>
-                {
-                    b.Property<int>("MovieId")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("Genre")
-                        .IsRequired();
-
-                    b.Property<DateTime>("Released");
-
-                    b.Property<string>("Title")
-                        .IsRequired();
-
-                    b.Property<int>("UserId");
-
-                    b.HasKey("MovieId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("Movies");
                 });
 
             modelBuilder.Entity("LoginReg.Models.User", b =>
@@ -77,30 +57,59 @@ namespace LoginReg.Migrations
 
                     b.Property<string>("Password")
                         .IsRequired()
-                        .HasMaxLength(20);
+                        .HasMaxLength(255);
 
                     b.Property<DateTime>("UpdatedAt");
-
-                    b.Property<int>("WatchedMovies");
 
                     b.HasKey("UserId");
 
                     b.ToTable("Users");
                 });
 
+            modelBuilder.Entity("LoginReg.Models.Wedding", b =>
+                {
+                    b.Property<int>("WeddingId")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<DateTime>("CreatedAt");
+
+                    b.Property<string>("CreatorName");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int>("Duration");
+
+                    b.Property<string>("Time")
+                        .IsRequired();
+
+                    b.Property<string>("TimeType")
+                        .IsRequired();
+
+                    b.Property<DateTime>("UpdatedAt");
+
+                    b.Property<int>("UserId");
+
+                    b.Property<DateTime>("WeddingDate");
+
+                    b.Property<string>("WeddingTitle")
+                        .IsRequired();
+
+                    b.HasKey("WeddingId");
+
+                    b.ToTable("Weddings");
+                });
+
             modelBuilder.Entity("LoginReg.Models.Association", b =>
                 {
                     b.HasOne("LoginReg.Models.User", "User")
-                        .WithMany()
+                        .WithMany("UserWeddings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
-                });
 
-            modelBuilder.Entity("LoginReg.Models.Movie", b =>
-                {
-                    b.HasOne("LoginReg.Models.User", "User")
-                        .WithMany("UserMovies")
-                        .HasForeignKey("UserId")
+                    b.HasOne("LoginReg.Models.Wedding", "Wedding")
+                        .WithMany("Guests")
+                        .HasForeignKey("WeddingId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618

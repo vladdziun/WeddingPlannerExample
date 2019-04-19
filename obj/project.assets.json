@@ -11620,11 +11620,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\CodingDojo\\LoginRegFresh\\LoginReg.csproj",
+      "projectUniqueName": "D:\\CodingDojo\\WeddingPlannerExample\\LoginReg.csproj",
       "projectName": "LoginReg",
-      "projectPath": "D:\\CodingDojo\\LoginRegFresh\\LoginReg.csproj",
+      "projectPath": "D:\\CodingDojo\\WeddingPlannerExample\\LoginReg.csproj",
       "packagesPath": "C:\\Users\\sspaw\\.nuget\\packages\\",
-      "outputPath": "D:\\CodingDojo\\LoginRegFresh\\obj\\",
+      "outputPath": "D:\\CodingDojo\\WeddingPlannerExample\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

@@ -3,28 +3,33 @@
 @using System.Linq;
 @model List<Wedding>
 <body>
-    <h1>Welcome!</h1>
-    <a href = "/add/wedding">Add Wedding</a> 
+    <h1>Welcome to Dojo Activity Center!</h1>
+    <a href = "/add/activity">Add Activity</a> 
     <a href = "/logout">Logout</a> 
 
     @foreach (var w in Model)
     {
-        <p><a href = "/view/wedding/@w.WeddingId">@w.WedderOne & @w.WedderTwo</a> | @w.WeddingDate | @w.Guests.Count | 
+        @if(w.WeddingDate >= DateTime.Today && w.Time >= DateTime.Now)
+        {
+        <p><a href = "/view/@w.WeddingId">@w.WeddingTitle </a> Date: @w.WeddingDate.ToString("MMMM dd") at @w.Time.ToString("h:mm tt")
+         | Duration: @w.Duration @w.TimeType | Event Coordinator: @w.CreatorName | Participants: @w.Guests.Count | 
             Action:
             @if(@w.UserId == @ViewBag.UserId)
             {
-                <a href="/delete/wedding/@w.WeddingId">Delete</a>
+                <a href="/delete/@w.WeddingId">Delete</a>
             }else{
                 @if(w.Guests.Any (g => g.UserId == @ViewBag.UserId))
                 {
-                    <a href="/leave/wedding/@w.WeddingId">Un-RSVP</a>
+                    <a href="/leave/wedding/@w.WeddingId">Leave</a>
                 }else
                 {
-                    <a href="/join/wedding/@w.WeddingId">RSVP</a> 
+                    <a href="/join/wedding/@w.WeddingId">Join</a> 
                 }
             }
             
         </p>
+        }
+
     }
     
 </body>

@@ -71,20 +71,26 @@ namespace LoginReg.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<string>("CreatorName");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int>("Duration");
+
+                    b.Property<DateTime>("Time");
+
+                    b.Property<string>("TimeType")
+                        .IsRequired();
+
                     b.Property<DateTime>("UpdatedAt");
 
                     b.Property<int>("UserId");
 
-                    b.Property<string>("WedderOne")
-                        .IsRequired();
-
-                    b.Property<string>("WedderTwo")
-                        .IsRequired();
-
-                    b.Property<string>("WeddingAddress")
-                        .IsRequired();
-
                     b.Property<DateTime>("WeddingDate");
+
+                    b.Property<string>("WeddingTitle")
+                        .IsRequired();
 
                     b.HasKey("WeddingId");
 

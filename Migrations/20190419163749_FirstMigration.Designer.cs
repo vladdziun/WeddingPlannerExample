@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginReg.Migrations
 {
     [DbContext(typeof(LoginRegContext))]
-    [Migration("20190412202512_FourthMigration")]
-    partial class FourthMigration
+    [Migration("20190419163749_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -34,7 +34,7 @@ namespace LoginReg.Migrations
 
                     b.HasIndex("WeddingId");
 
-                    b.ToTable("Association");
+                    b.ToTable("Associations");
                 });
 
             modelBuilder.Entity("LoginReg.Models.User", b =>
@@ -42,21 +42,22 @@ namespace LoginReg.Migrations
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("Balance");
-
                     b.Property<DateTime>("CreatedAt");
 
                     b.Property<string>("Email")
                         .IsRequired();
 
                     b.Property<string>("FirstName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("LastName")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(50);
 
                     b.Property<string>("Password")
-                        .IsRequired();
+                        .IsRequired()
+                        .HasMaxLength(255);
 
                     b.Property<DateTime>("UpdatedAt");
 
@@ -72,17 +73,24 @@ namespace LoginReg.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
-                    b.Property<DateTime>("Date");
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int>("Duration");
+
+                    b.Property<string>("Time")
+                        .IsRequired();
+
+                    b.Property<string>("TimeType")
+                        .IsRequired();
 
                     b.Property<DateTime>("UpdatedAt");
 
-                    b.Property<string>("WedderOne")
-                        .IsRequired();
+                    b.Property<int>("UserId");
 
-                    b.Property<string>("WedderTwo")
-                        .IsRequired();
+                    b.Property<DateTime>("WeddingDate");
 
-                    b.Property<string>("WeddingAddress")
+                    b.Property<string>("WeddingTitle")
                         .IsRequired();
 
                     b.HasKey("WeddingId");
@@ -92,12 +100,12 @@ namespace LoginReg.Migrations
 
             modelBuilder.Entity("LoginReg.Models.Association", b =>
                 {
-                    b.HasOne("LoginReg.Models.User", "user")
-                        .WithMany("Weddings")
+                    b.HasOne("LoginReg.Models.User", "User")
+                        .WithMany("UserWeddings")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("LoginReg.Models.Wedding", "wedding")
+                    b.HasOne("LoginReg.Models.Wedding", "Wedding")
                         .WithMany("Guests")
                         .HasForeignKey("WeddingId")
                         .OnDelete(DeleteBehavior.Cascade);

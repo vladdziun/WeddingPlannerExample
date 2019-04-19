@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LoginReg.Migrations
 {
     [DbContext(typeof(LoginRegContext))]
-    [Migration("20190418220700_1")]
-    partial class _1
+    [Migration("20190419165542_4")]
+    partial class _4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -73,18 +73,26 @@ namespace LoginReg.Migrations
 
                     b.Property<DateTime>("CreatedAt");
 
+                    b.Property<string>("CreatorName");
+
+                    b.Property<string>("Description")
+                        .IsRequired();
+
+                    b.Property<int>("Duration");
+
+                    b.Property<DateTime>("Time");
+
+                    b.Property<string>("TimeType")
+                        .IsRequired();
+
                     b.Property<DateTime>("UpdatedAt");
 
-                    b.Property<string>("WedderOne")
-                        .IsRequired();
-
-                    b.Property<string>("WedderTwo")
-                        .IsRequired();
-
-                    b.Property<string>("WeddingAddress")
-                        .IsRequired();
+                    b.Property<int>("UserId");
 
                     b.Property<DateTime>("WeddingDate");
+
+                    b.Property<string>("WeddingTitle")
+                        .IsRequired();
 
                     b.HasKey("WeddingId");
 

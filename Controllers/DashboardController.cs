@@ -29,12 +29,13 @@ namespace LoginReg.Controllers
                 return RedirectToAction("Index", "Home");
             List<Wedding> AllWeddings = dbContext.Weddings
             .Include(w => w.Guests)
+            .OrderBy(w => w.WeddingDate)
             .ToList();
             ViewBag.UserId = userId;
 
             return View("Dashboard", AllWeddings);
         }
-        [Route("add/wedding")]
+        [Route("add/activity")]
         [HttpGet]
         public IActionResult AddWedding()
         {
@@ -54,6 +55,8 @@ namespace LoginReg.Controllers
 
             if (ModelState.IsValid)
             {
+                var oneUser = dbContext.Users.FirstOrDefault(w => w.UserId == userId);
+                newWedding.CreatorName = oneUser.FirstName;
                 newWedding.UserId = (int)userId;
                 dbContext.Add(newWedding);
                 dbContext.SaveChanges();
@@ -90,6 +93,7 @@ namespace LoginReg.Controllers
             int? userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
                 return RedirectToAction("Index", "Home");
+
             var oneAssociation = dbContext.Associations
             .FirstOrDefault(a => a.WeddingId == weddingId && a.UserId == userId);
 
@@ -98,15 +102,29 @@ namespace LoginReg.Controllers
 
             return RedirectToAction("Dashboard");
         }
-        [Route("view/wedding/{weddingId}")]
+        [Route("view/{weddingId}")]
         [HttpGet]
         public IActionResult ViewWedding(int weddingId)
         {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+                return RedirectToAction("Index", "Home");
+
             Wedding oneWedding = dbContext.Weddings
             .Include(w => w.Guests)
             .ThenInclude(a => a.User)
             .FirstOrDefault(w => w.WeddingId == weddingId);
+            ViewBag.UserId = userId;
             return View("ViewWedding", oneWedding);
+        }
+                [Route("/delete/{weddingId}")]
+        [HttpGet]
+        public IActionResult DeleteWedding(int weddingId)
+        {
+            Wedding oneWedding = dbContext.Weddings.FirstOrDefault(w => w.WeddingId == weddingId);
+            dbContext.Remove(oneWedding);
+            dbContext.SaveChanges();
+            return RedirectToAction("Dashboard");
         }
 
     }

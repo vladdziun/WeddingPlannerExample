@@ -2,21 +2,20 @@
 
 namespace LoginReg.Migrations
 {
-    public partial class _2 : Migration
+    public partial class _3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "UserId",
+            migrationBuilder.AddColumn<string>(
+                name: "CreatorName",
                 table: "Weddings",
-                nullable: false,
-                defaultValue: 0);
+                nullable: true);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "UserId",
+                name: "CreatorName",
                 table: "Weddings");
         }
     }

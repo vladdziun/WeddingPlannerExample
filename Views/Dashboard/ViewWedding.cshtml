@@ -1,9 +1,25 @@
 @model Wedding
-
-<h1>@Model.WedderOne & @Model.WedderTwo</h1>
-<h1>@Model.WeddingDate.ToString("dddd, dd MMMM yyyy")</h1>
-<h1>All Guests </h1>
+<partial name="DashboardPartial"/>
+<h1>Title: @Model.WeddingTitle</h1>
+<h2>Event Coordinator: @Model.CreatorName</h2>
+<h2>Description: </h2>
+<p>@Model.Description</p>
+<p>@Model.WeddingDate.ToString("dddd, dd MMMM yyyy")</p>
+<h1>All Participants </h1>
 @foreach (var g in Model.Guests)
 {
     <p>@g.User.FirstName @g.User.LastName</p>
 }
+
+            @if(@Model.UserId == @ViewBag.UserId)
+            {
+                <a href="/delete/wedding/@Model.WeddingId">Delete</a>
+            }else{
+                @if(Model.Guests.Any (g => g.UserId == @ViewBag.UserId))
+                {
+                    <a href="/leave/wedding/@Model.WeddingId">Leave</a>
+                }else
+                {
+                    <a href="/join/wedding/@Model.WeddingId">Join</a> 
+                }
+            }
