@@ -86,27 +86,27 @@ namespace LoginReg.Controllers
            .Any(w => w.Wedding.WeddingDate.Ticks - oneWedding.WeddingDate.Ticks >= 0));
 
             Console.WriteLine(oneUser.UserWeddings);
-            if(oneUser.UserWeddings
-           .Any(w => w.Wedding.WeddingDate.Ticks - oneWedding.WeddingDate.Ticks == 0 && 
-           w.Wedding.Time.TimeOfDay.TotalMilliseconds - oneWedding.Time.TimeOfDay.TotalMilliseconds == 0))
-           {
-               return RedirectToAction("Dashboard");
-           }
-           int idx = 0;
-            if(oneWedding.TimeType == "Hours")
-                idx = 3600;
-            else if (oneWedding.TimeType == "Minutes")
-                idx = 60;
-            else if (oneWedding.TimeType == "Days")
-                idx = 86400;
+        //     if(oneUser.UserWeddings
+        //    .Any(w => w.Wedding.WeddingDate.Ticks - oneWedding.WeddingDate.Ticks == 0 && 
+        //    w.Wedding.Time.TimeOfDay.TotalMilliseconds - oneWedding.Time.TimeOfDay.TotalMilliseconds == 0))
+        //    {
+        //        return RedirectToAction("Dashboard");
+        //    }
+        //    int idx = 0;
+        //     if(oneWedding.TimeType == "Hours")
+        //         idx = 3600;
+        //     else if (oneWedding.TimeType == "Minutes")
+        //         idx = 60;
+        //     else if (oneWedding.TimeType == "Days")
+        //         idx = 86400;
 
-            int duration = oneWedding.Duration * idx;
+        //     int duration = oneWedding.Duration * idx;
 
-           if(oneUser.UserWeddings
-           .Any(w => w.Wedding.Duration - oneWedding.Duration == 0))
-           {
-               return RedirectToAction("Dashboard");
-           }
+        //    if(oneUser.UserWeddings
+        //    .Any(w => w.Wedding.Duration - oneWedding.Duration == 0))
+        //    {
+        //        return RedirectToAction("Dashboard");
+        //    }
            System.Console.WriteLine(oneWedding.WeddingDate.Ticks);
             Association newAssociation = new Association()
             {
